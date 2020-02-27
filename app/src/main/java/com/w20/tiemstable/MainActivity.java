@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,12 +51,27 @@ public class MainActivity extends AppCompatActivity {
                     return;
 
 //                numbers.add(Integer.parseInt(et.getText().toString()));
-                for (int i=1; i<=10; i++)
-                    numbers.add(i * Integer.parseInt(et.getText().toString()));
+//                for (int i=1; i<=10; i++)
+//                    numbers.add(i * Integer.parseInt(et.getText().toString()));
+                populateTable(Integer.parseInt(et.getText().toString()), numbers);
                 adapter.notifyDataSetChanged();
 
 
             }
         });
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                populateTable(Integer.parseInt(parent.getItemAtPosition(position).toString()), numbers);
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void populateTable(int number, List numberList) {
+        numberList.clear();
+        for (int i=1; i<=10; i++)
+            numberList.add(i * number);
     }
 }
